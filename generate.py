@@ -83,16 +83,25 @@ pkgbuild.attributes += [
     Attribute("provides", ["'nordvpn'"]),
     Attribute("conflicts", ["'openvpn-nordvpn'"]),
     Attribute("install", "nordvpn-bin.install"),
-    Attribute("source_i686",
-              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_i386.deb\""]),
+    # Mapping between debian arch names and archlinux arch names
+    # source: amd64 - x86_64
+    # source: i386 - i686
+    # source: armel - armv6h
+    # source: armhf - armv7h
+    # source: arm64 - aarch64
     Attribute("source_x86_64",
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_amd64.deb\""]),
+    Attribute("source_i686",
+              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_i386.deb\""]),
+    Attribute("source_armv6h",
+              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
     Attribute("source_armv7h",
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armhf.deb\""]),
     Attribute("source_aarch64",
-              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_aarch64.deb\""]),
-    Attribute("sha256sums_i686", ['update me']),
+              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_arm64.deb\""]),
     Attribute("sha256sums_x86_64", ['update me']),
+    Attribute("sha256sums_i686", ['update me']),
+    Attribute("sha256sums_armv6h", ['update me']),
     Attribute("sha256sums_armv7h", ['update me']),
     Attribute("sha256sums_aarch64", ['update me'])
 ]
