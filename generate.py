@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 from urllib.request import Request, urlopen
 import os
+import sys
 from pkgbuild import *
 
+dry = len(sys.argv) > 1 and sys.argv[1] == "--dry"
 
 def run_or_die(command):
     code = os.system(command)
@@ -60,7 +62,7 @@ else:
 latest_version = get_latest_version()
 current_version = get_current_version()
 
-if latest_version == current_version:
+if latest_version == current_version and not dry:
     print("Current version is the latest version, no update necessary")
     exit(0)
 
@@ -75,7 +77,7 @@ pkgbuild.attributes += [
     Attribute("pkgver", latest_version.aur_str()),
     Attribute("pkgrel", "1"),
     Attribute("pkgdesc", "\"NordVPN CLI tool for Linux\""),
-    Attribute("arch", ["'x86_64'", "'i686'", "'armv6h'", "'armv7h'", "'aarch64'"]),
+    Attribute("arch", ["'x86_64'", "'i686'", "'arm'", "'armv6h'", "'armv7h'", "'aarch64'"]),
     Attribute("url", "\"https://nordvpn.com/download/linux/\""),
     Attribute("license", ["'custom'"]),
     Attribute("depends", ["'net-tools'", "'libxslt'", "'iptables'", "'procps'", "'iproute2'"]),
@@ -86,6 +88,7 @@ pkgbuild.attributes += [
     # Mapping between debian arch names and archlinux arch names
     # source: amd64 - x86_64
     # source: i386 - i686
+    # source: armel - arm
     # source: armel - armv6h
     # source: armhf - armv7h
     # source: arm64 - aarch64
@@ -93,6 +96,8 @@ pkgbuild.attributes += [
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_amd64.deb\""]),
     Attribute("source_i686",
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_i386.deb\""]),
+    Attribute("source_arm",
+              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
     Attribute("source_armv6h",
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
     Attribute("source_armv7h",
@@ -101,6 +106,7 @@ pkgbuild.attributes += [
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_arm64.deb\""]),
     Attribute("sha256sums_x86_64", ['update me']),
     Attribute("sha256sums_i686", ['update me']),
+    Attribute("sha256sums_arm", ['update me']),
     Attribute("sha256sums_armv6h", ['update me']),
     Attribute("sha256sums_armv7h", ['update me']),
     Attribute("sha256sums_aarch64", ['update me'])
@@ -132,4 +138,5 @@ if latest_version.major != current_version.major or latest_version.minor != curr
     print("Refusing to automatically update a major or minor version")
     exit(1)
 else:
-    run_or_die("git push")
+    if not dry:
+        run_or_die("git push")
