@@ -77,7 +77,7 @@ pkgbuild.attributes += [
     Attribute("pkgver", latest_version.aur_str()),
     Attribute("pkgrel", "1"),
     Attribute("pkgdesc", "\"NordVPN CLI tool for Linux\""),
-    Attribute("arch", ["'x86_64'", "'i686'", "'arm'", "'armv6h'", "'armv7h'", "'aarch64'"]),
+    Attribute("arch", ["'x86_64'", "'i686'", "'armv7h'"]),
     Attribute("url", "\"https://nordvpn.com/download/linux/\""),
     Attribute("license", ["'custom'"]),
     Attribute("depends", ["'net-tools'", "'libxslt'", "'iptables'", "'procps'", "'iproute2'"]),
@@ -96,20 +96,20 @@ pkgbuild.attributes += [
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_amd64.deb\""]),
     Attribute("source_i686",
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_i386.deb\""]),
-    Attribute("source_arm",
-              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
-    Attribute("source_armv6h",
-              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
+    # Attribute("source_arm",
+    #           ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
+    # Attribute("source_armv6h",
+    #           ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
     Attribute("source_armv7h",
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armhf.deb\""]),
-    Attribute("source_aarch64",
-              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_arm64.deb\""]),
+    # Attribute("source_aarch64",
+    #           ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_arm64.deb\""]),
     Attribute("sha256sums_x86_64", ['update me']),
     Attribute("sha256sums_i686", ['update me']),
-    Attribute("sha256sums_arm", ['update me']),
-    Attribute("sha256sums_armv6h", ['update me']),
+    # Attribute("sha256sums_arm", ['update me']),
+    # Attribute("sha256sums_armv6h", ['update me']),
     Attribute("sha256sums_armv7h", ['update me']),
-    Attribute("sha256sums_aarch64", ['update me'])
+    # Attribute("sha256sums_aarch64", ['update me'])
 ]
 
 pkgbuild.functions += [Function("package", [
@@ -134,8 +134,11 @@ run_or_die(f"git commit -m 'Update to {latest_version.upstream_str()}'")
 
 print(f"Updating from {current_version.upstream_str()} to {latest_version.upstream_str()}")
 
-if latest_version.major != current_version.major or latest_version.minor != current_version.minor:
-    print("Refusing to automatically update a major or minor version")
+# if latest_version.major != current_version.major or latest_version.minor != current_version.minor:
+#     print("Refusing to automatically update a major or minor version")
+#     exit(1)
+if latest_version.major != current_version.major:
+    print("Refusing to automatically update a major version")
     exit(1)
 else:
     if not dry:
