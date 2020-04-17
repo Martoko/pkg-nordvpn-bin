@@ -34,18 +34,24 @@ class Function:
 
 class Version:
     def __init__(self, string):
-        regex = r"([0-9]+)\.([0-9]+)\.([0-9]+)[-_]([0-9]+)"
+        regex = r"([0-9]+)\.([0-9]+)\.([0-9]+)([-_]([0-9]+))?"
         match = re.search(regex, string)
         self.major = match[1]
         self.minor = match[2]
         self.patch = match[3]
-        self.upstream_revision = match[4]
+        self.upstream_revision = match[5]
 
     def aur_str(self):
-        return f"{self.major}.{self.minor}.{self.patch}_{self.upstream_revision}"
+        if self.upstream_revision is None:
+            return f"{self.major}.{self.minor}.{self.patch}"
+        else:
+            return f"{self.major}.{self.minor}.{self.patch}_{self.upstream_revision}"
 
     def upstream_str(self):
-        return f"{self.major}.{self.minor}.{self.patch}-{self.upstream_revision}"
+        if self.upstream_revision is None:
+            return f"{self.major}.{self.minor}.{self.patch}"
+        else:
+            return f"{self.major}.{self.minor}.{self.patch}-{self.upstream_revision}"
 
     def __eq__(self, other):
         if not isinstance(other, Version):
@@ -69,3 +75,9 @@ class Pkgbuild:
         functions = "\n\n".join([str(m) for m in self.functions])
 
         return "\n\n".join([maintainers, attributes, functions])
+
+if __name__ == '__main__':
+    for v in ['3.7.1', '3.3.1-1', '3.7.0-3', '3.7.0-0']:
+        print(v)
+        print('AUR: ' + Version(v).aur_str())
+        print('Upstream: ' + Version(v).upstream_str())
