@@ -103,14 +103,14 @@ pkgbuild.attributes += [
     #           ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armel.deb\""]),
     Attribute("source_armv7h",
               ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_armhf.deb\""]),
-    # Attribute("source_aarch64",
-    #           ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_arm64.deb\""]),
+    Attribute("source_aarch64",
+              ["\"https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn_${pkgver//_/-}_arm64.deb\""]),
     Attribute("sha256sums_x86_64", ['update me']),
     Attribute("sha256sums_i686", ['update me']),
     # Attribute("sha256sums_arm", ['update me']),
     # Attribute("sha256sums_armv6h", ['update me']),
     Attribute("sha256sums_armv7h", ['update me']),
-    # Attribute("sha256sums_aarch64", ['update me'])
+    Attribute("sha256sums_aarch64", ['update me'])
 ]
 
 pkgbuild.functions += [Function("package", [
