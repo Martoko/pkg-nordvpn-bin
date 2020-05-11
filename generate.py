@@ -77,7 +77,7 @@ pkgbuild.attributes += [
     Attribute("pkgver", latest_version.aur_str()),
     Attribute("pkgrel", "1"),
     Attribute("pkgdesc", "\"NordVPN CLI tool for Linux\""),
-    Attribute("arch", ["'x86_64'", "'i686'", "'armv7h'"]),
+    Attribute("arch", ["'x86_64'", "'i686'", "'armv7h'", "'aarch64'"]),
     Attribute("url", "\"https://nordvpn.com/download/linux/\""),
     Attribute("license", ["'custom'"]),
     Attribute("depends", ["'libxslt'", "'iptables'", "'procps'", "'iproute2'",
