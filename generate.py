@@ -82,7 +82,7 @@ pkgbuild.attributes += [
     Attribute("license", ["'custom'"]),
     Attribute("depends", ["'libxslt'", "'iptables'", "'procps'", "'iproute2'",
                           "'ipset'", "'ca-certificates'"]),
-    Attribute("optdepends", ["'wireguard-tools: nordlynx support'", "'wireguard-arch: nordlynx support'"]),
+    Attribute("optdepends", ["'wireguard-tools: nordlynx support'"]),
     Attribute("provides", ["'nordvpn'"]),
     Attribute("conflicts", ["'openvpn-nordvpn'"]),
     Attribute("install", "nordvpn-bin.install"),
