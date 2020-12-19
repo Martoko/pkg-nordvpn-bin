@@ -6,6 +6,7 @@ from pkgbuild import *
 
 dry = len(sys.argv) > 1 and sys.argv[1] == "--dry"
 
+
 def run_or_die(command):
     code = os.system(command)
     if code != 0:
@@ -117,7 +118,8 @@ pkgbuild.functions += [Function("package", [
     '',
     'mv "${pkgdir}/usr/sbin/nordvpnd" "${pkgdir}/usr/bin"',
     'rm -r "${pkgdir}/etc/init.d"',
-    'rm -r "${pkgdir}/usr/sbin"'
+    'rm -r "${pkgdir}/usr/sbin"',
+    'echo "g nordvpn - -" | install -Dm644 /dev/stdin "${pkgdir}/usr/lib/sysusers.d/${pkgname}.conf"'
 ])]
 
 with open("PKGBUILD", "w") as f:
