@@ -48,7 +48,7 @@ def get_latest_version():
     packages = [package_to_dict(package) for package in packages]
 
     # Find the most recent version
-    packages.sort(key=lambda p: p["Version"], reverse=True)
+    packages.sort(key=lambda p: Version(p["Version"]), reverse=True)
 
     return Version(packages[0]["Version"])
 

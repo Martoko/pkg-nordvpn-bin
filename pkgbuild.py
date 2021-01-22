@@ -36,10 +36,10 @@ class Version:
     def __init__(self, string):
         regex = r"([0-9]+)\.([0-9]+)\.([0-9]+)([-_]([0-9]+))?"
         match = re.search(regex, string)
-        self.major = match[1]
-        self.minor = match[2]
-        self.patch = match[3]
-        self.upstream_revision = match[5]
+        self.major = int(match[1])
+        self.minor = int(match[2])
+        self.patch = int(match[3])
+        self.upstream_revision = int(match[5]) if match[5] is not None else None
 
     def aur_str(self):
         if self.upstream_revision is None:
@@ -53,6 +53,9 @@ class Version:
         else:
             return f"{self.major}.{self.minor}.{self.patch}-{self.upstream_revision}"
 
+    def __repr__(self):
+        return self.upstream_str()
+
     def __eq__(self, other):
         if not isinstance(other, Version):
             return False
@@ -61,6 +64,45 @@ class Version:
                self.minor == other.minor and \
                self.patch == other.patch and \
                self.upstream_revision == other.upstream_revision
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __lt__(self, other):
+        if not isinstance(other, Version):
+            return False
+
+        if self.major < other.major:
+            return True
+
+        if self.major == other.major and \
+           self.minor < other.minor:
+            return True
+
+        if self.major == other.major and \
+           self.minor == other.minor and \
+           self.patch < other.patch:
+            return True
+
+        if self.major == other.major and \
+           self.minor == other.minor and \
+           self.patch == other.patch:
+            if self.upstream_revision is None and other.upstream_revision is not None:
+                return True
+            if self.upstream_revision is not None and other.upstream_revision is not None:
+                if self.upstream_revision < other.upstream_revision:
+                    return True
+
+        return False
+
+    def __gt__(self, other):
+        return self != other and not self < other
+
+    def __le__(self, other):
+        return self == other or self < other
+
+    def __ge__(self, other):
+        return self == other or self > other
 
 
 class Pkgbuild:
@@ -75,6 +117,7 @@ class Pkgbuild:
         functions = "\n\n".join([str(m) for m in self.functions])
 
         return "\n\n".join([maintainers, attributes, functions])
+
 
 if __name__ == '__main__':
     for v in ['3.7.1', '3.3.1-1', '3.7.0-3', '3.7.0-0']:
