@@ -114,7 +114,7 @@ pkgbuild.attributes += [
 ]
 
 pkgbuild.functions += [Function("package", [
-    'bsdtar -O -xf *.deb data.tar.xz | bsdtar -C "${pkgdir}" -xJf -',
+    'bsdtar -O -xf *.deb data.tar.gz | bsdtar -C "${pkgdir}" -xJf -',
     '',
     'mv "${pkgdir}/usr/sbin/nordvpnd" "${pkgdir}/usr/bin"',
     'rm -r "${pkgdir}/etc/init.d"',
