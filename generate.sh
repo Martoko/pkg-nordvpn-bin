@@ -46,6 +46,7 @@ fi
 
 echo "Updating PKGBUILD..." >&2
 sed -i -E "s/^pkgver=.*\$/pkgver=${new_pkgver}/" PKGBUILD
+sed -i -E "s/^pkgrel=.*\$/pkgrel=1/" PKGBUILD
 echo "Updating package checksums..." >&2
 updpkgsums
 echo "Building package..." >&2
